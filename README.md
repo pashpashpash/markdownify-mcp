@@ -5,7 +5,6 @@ Markdownify is a Model Context Protocol (MCP) server that converts various file 
 <a href="https://glama.ai/mcp/servers/bn5q4b0ett"><img width="380" height="200" src="https://glama.ai/mcp/servers/bn5q4b0ett/badge" alt="Markdownify Server MCP server" /></a>
 
 ## Features
-
 - Convert multiple file types to Markdown:
   - PDF
   - Images
@@ -19,51 +18,45 @@ Markdownify is a Model Context Protocol (MCP) server that converts various file 
   - General web pages
 - Retrieve existing Markdown files
 
-## Getting Started
+## Installation
 
-1. Clone this repository
-2. Install dependencies:
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/pashpashpash/markdownify-mcp.git
+   cd markdownify-mcp
    ```
+
+2. **Install Dependencies**:
+   ```bash
    pnpm install
    ```
+   Note: This will also install `uv` and related Python dependencies.
 
-Note: this will also install `uv` and related Python depdencies.
-
-3. Build the project:
-   ```
+3. **Build the Project**:
+   ```bash
    pnpm run build
    ```
-4. Start the server:
-   ```
-   pnpm start
-   ```
 
-## Development
+## Usage with Claude Desktop
 
-- Use `pnpm run dev` to start the TypeScript compiler in watch mode
-- Modify `src/server.ts` to customize server behavior
-- Add or modify tools in `src/tools.ts`
+Add the following to your claude_desktop_config.json:
+- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- Windows: `%APPDATA%/Claude/claude_desktop_config.json`
 
-## Usage with Desktop App
-
-To integrate this server with a desktop app, add the following to your app's server configuration:
-
-```js
+```json
 {
   "mcpServers": {
     "markdownify": {
       "command": "node",
-      "args": [
-        "{ABSOLUTE PATH TO FILE HERE}/dist/index.js"
-      ],
+      "args": ["path/to/markdownify-mcp/dist/index.js"],
       "env": {
-        // By default, the server will use the default install location of `uv`
         "UV_PATH": "/path/to/uv"
       }
     }
   }
 }
 ```
+Note: Replace "path/to/markdownify-mcp" with the actual path to your cloned repository.
 
 ## Available Tools
 
@@ -78,6 +71,27 @@ To integrate this server with a desktop app, add the following to your app's ser
 - `pptx-to-markdown`: Convert PPTX files to Markdown
 - `get-markdown-file`: Retrieve an existing Markdown file
 
+## Development
+
+```bash
+# Start TypeScript compiler in watch mode
+pnpm run dev
+
+# Build the project
+pnpm run build
+```
+
+### Server Customization
+- Modify `src/server.ts` to customize server behavior
+- Add or modify tools in `src/tools.ts`
+
+### Debugging
+
+If you run into issues, check Claude Desktop's MCP logs:
+```bash
+tail -n 20 -f ~/Library/Logs/Claude/mcp*.log
+```
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
@@ -85,3 +99,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+Note: This is a fork of the [original markdownify-mcp repository](https://github.com/zcaceres/markdownify-mcp).
